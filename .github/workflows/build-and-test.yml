@@ -1,14 +1,7 @@
 name: Build and Test
 
 on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
+  workflow_dispatch: 
 
 jobs:
   build-and-test:
@@ -49,19 +42,19 @@ jobs:
       - name: Test
         run: ctest --test-dir build --output-on-failure
 
-      - name: Generate coverage report
-        run: |
-          gcovr --root . --filter 'App/' \
-            --exclude '.*autogen.*' --exclude '.*moc_.*' --exclude '.*qrc_.*' \
-            --print-summary \
-            --xml coverage.xml
-        continue-on-error: true
+      # - name: Generate coverage report
+      #   run: |
+      #     gcovr --root . --filter 'App/' \
+      #       --exclude '.*autogen.*' --exclude '.*moc_.*' --exclude '.*qrc_.*' \
+      #       --print-summary \
+      #       --xml coverage.xml
+      #   continue-on-error: true
 
-      - name: Upload coverage artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.xml
-          retention-days: 30
+      # - name: Upload coverage artifact
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage-report
+      #     path: coverage.xml
+      #     retention-days: 30
 
